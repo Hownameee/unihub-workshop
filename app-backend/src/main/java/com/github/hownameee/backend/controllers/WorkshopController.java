@@ -1,38 +1,52 @@
 package com.github.hownameee.backend.controllers;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.github.hownameee.backend.dtos.WorkshopRequest;
+import com.github.hownameee.backend.dtos.WorkshopResponse;
+import com.github.hownameee.backend.dtos.WorkshopsResponse;
+import com.github.hownameee.backend.services.WorkshopService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/workshops")
 public class WorkshopController {
 
-    @GetMapping
-    public void getAllWorkshops() {
+    private final WorkshopService workshopService;
 
+    public WorkshopController(WorkshopService workshopService) {
+        this.workshopService = workshopService;
+    }
+
+    @GetMapping
+    public ResponseEntity<WorkshopsResponse> getAllWorkshops() {
+        WorkshopsResponse response = new WorkshopsResponse(workshopService.getAllWorkshops());
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public void getWorkshopById() {
-
+    public ResponseEntity<WorkshopResponse> getWorkshopById(@PathVariable Long id) {
+        WorkshopResponse response = workshopService.getWorkshopById(id);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public void createWorkshop() {
-
+    public ResponseEntity<WorkshopResponse> createWorkshop(@RequestBody WorkshopRequest request) {
+        WorkshopResponse response = workshopService.createWorkshop(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping()
-    public void updateWorkshop() {
-
+    @PutMapping("/{id}")
+    public ResponseEntity<WorkshopResponse> updateWorkshop(
+            @PathVariable Long id,
+            @RequestBody WorkshopRequest request) {
+        WorkshopResponse response = workshopService.updateWorkshop(id, request);
+        return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping()
-    public void deleteWorkshop() {
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteWorkshop(@PathVariable Long id) {
+        workshopService.deleteWorkshop(id);
+        return ResponseEntity.noContent().build();
     }
 }

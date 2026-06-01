@@ -1,5 +1,14 @@
 package com.github.hownameee.backend.dtos;
 
-public class WorkshopResponse {
+import java.time.OffsetDateTime;
 
-}
+public record WorkshopResponse(
+    Long workshopId,
+    String title,
+    String description,
+    String coverImageUrl,
+    Integer totalCapacity,
+    Integer registeredSeats,
+    OffsetDateTime createdAt,
+    OffsetDateTime updatedAt
+) {}
