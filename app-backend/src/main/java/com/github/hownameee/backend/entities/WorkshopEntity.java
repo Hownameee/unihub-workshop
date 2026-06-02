@@ -27,6 +27,12 @@ public class WorkshopEntity {
     @Column(name = "registered_seats", nullable = false)
     private Integer registeredSeats = 0;
 
+    @Column(name = "registration_start_at", nullable = false)
+    private OffsetDateTime registrationStartAt;
+
+    @Column(name = "registration_end_at", nullable = false)
+    private OffsetDateTime registrationEndAt;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt = OffsetDateTime.now();
 
@@ -36,7 +42,8 @@ public class WorkshopEntity {
     @Column(name = "deleted_at")
     private OffsetDateTime deletedAt;
 
-    public WorkshopEntity() {}
+    public WorkshopEntity() {
+    }
 
     public Long getWorkshopId() {
         return workshopId;
@@ -108,5 +115,27 @@ public class WorkshopEntity {
 
     public void setDeletedAt(OffsetDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public OffsetDateTime getRegistrationStartAt() {
+        return registrationStartAt;
+    }
+
+    public void setRegistrationStartAt(OffsetDateTime registrationStartAt) {
+        this.registrationStartAt = registrationStartAt;
+    }
+
+    public OffsetDateTime getRegistrationEndAt() {
+        return registrationEndAt;
+    }
+
+    public void setRegistrationEndAt(OffsetDateTime registrationEndAt) {
+        this.registrationEndAt = registrationEndAt;
+    }
+
+    public boolean isRegistrationOpen() {
+        OffsetDateTime now = OffsetDateTime.now();
+        return now.isAfter(this.registrationStartAt) && now.isBefore(this.registrationEndAt);
+
     }
 }

@@ -9,6 +9,8 @@ public record WorkshopResponse(
     String coverImageUrl,
     Integer totalCapacity,
     Integer registeredSeats,
+    OffsetDateTime registrationStartAt,
+    OffsetDateTime registrationEndAt,
     OffsetDateTime createdAt,
     OffsetDateTime updatedAt
 ) {}

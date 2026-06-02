@@ -11,8 +11,11 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://app-db:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATA_REDIS_HOST=app-redis
+      - SPRING_DATA_REDIS_PORT=6379
     depends_on:
       - app-db
+      - app-redis
 
   app-frontend:
     build:
@@ -37,6 +40,12 @@ services:
       - ./app-db/sample-data.sql:/docker-entrypoint-initdb.d/sample-data.sql
     ports:
       - "5432:5432"
+
+  app-redis:
+    image: redis:alpine
+    container_name: app-redis
+    ports:
+      - "6379:6379"
 
   gateway-nginx:
     image: nginx:alpine
