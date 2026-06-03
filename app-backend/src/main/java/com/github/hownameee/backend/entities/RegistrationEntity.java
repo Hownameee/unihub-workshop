@@ -25,9 +25,6 @@ public class RegistrationEntity {
     @JoinColumn(name = "workshop_id", nullable = false)
     private WorkshopEntity workshop;
 
-    @Column(name = "seat_number", nullable = false)
-    private Integer seatNumber;
-
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
@@ -121,13 +118,5 @@ public class RegistrationEntity {
 
     public void setDeletedAt(OffsetDateTime deletedAt) {
         this.deletedAt = deletedAt;
-    }
-
-    public Integer getSeatNumber() {
-        return seatNumber;
-    }
-
-    public void setSeatNumber(Integer seatNumber) {
-        this.seatNumber = seatNumber;
     }
 }

@@ -5,7 +5,14 @@ import org.springframework.stereotype.Repository;
 
 import com.github.hownameee.backend.entities.RegistrationEntity;
 
+import com.github.hownameee.backend.entities.enums.RegistrationPaymentStatus;
+import java.time.OffsetDateTime;
+import java.util.List;
+
 @Repository
 public interface RegistrationRepository extends JpaRepository<RegistrationEntity, Long> {
-
+    List<RegistrationEntity> findAllByPaymentStatusAndCreatedAtBeforeAndDeletedAtIsNull(
+            RegistrationPaymentStatus paymentStatus,
+            OffsetDateTime threshold
+    );
 }
