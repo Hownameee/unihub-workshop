@@ -3,33 +3,27 @@ services:
     build:
       context: ./app-backend
       dockerfile: Dockerfile
-    image: app-backend:latest
+    image: app-backend:0.0.1-SNAPSHOT
     container_name: app-backend
-    ports:
-      - "4000:4000"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://app-db:5432/postgres
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_DATA_REDIS_HOST=app-redis
-      - SPRING_DATA_REDIS_PORT=6379
+    env_file:
+      - ./app-backend/.env
     depends_on:
       - app-db
       - app-redis
+    networks:
+      - unihub-workshop-network
 
   app-frontend:
     build:
       context: ./app-frontend
       dockerfile: Dockerfile
-    image: app-frontend:latest
+    image: app-frontend:0.0.1-SNAPSHOT
     container_name: app-frontend
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
+    networks:
+      - unihub-workshop-network
 
   app-db:
-    image: postgres:17
+    image: postgres:17.10-bookworm
     container_name: app-db
     environment:
       - POSTGRES_USER=postgres
@@ -38,17 +32,24 @@ services:
     volumes:
       - ./app-db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
       - ./app-db/sample-data.sql:/docker-entrypoint-initdb.d/sample-data.sql
-    ports:
-      - "5432:5432"
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - unihub-workshop-network
 
   app-redis:
-    image: redis:alpine
+    image: redis:8.8.0-alpine3.23
     container_name: app-redis
-    ports:
-      - "6379:6379"
+    networks:
+      - unihub-workshop-network
+
+  bff-redis:
+    image: redis:8.8.0-alpine3.23
+    container_name: bff-redis
+    networks:
+      - unihub-workshop-network
 
   gateway-nginx:
-    image: nginx:alpine
+    image: nginx:1.30.4-alpine3.24
     container_name: gateway-nginx
     ports:
       - "80:80"
@@ -58,12 +59,14 @@ services:
       - service-auth
       - app-frontend
       - gateway-bff
+    networks:
+      - unihub-workshop-network
 
   service-auth:
-    image: quay.io/keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:26.7.0
     container_name: service-auth
-    ports:
-      - "8080:8080"
+    env_file:
+      - ./service-auth/.env
     environment:
       - KC_HOSTNAME=localhost
       - KC_HTTP_RELATIVE_PATH=/auth
@@ -78,30 +81,26 @@ services:
     command: start-dev --import-realm
     depends_on:
       - app-db
+    networks:
+      - unihub-workshop-network
 
   gateway-bff:
     build:
       context: ./gateway-bff
       dockerfile: Dockerfile
-    image: gateway-bff:latest
+    image: gateway-bff:0.0.1-SNAPSHOT
     container_name: gateway-bff
-    ports:
-      - "8081:8081"
+    env_file:
+      - ./gateway-bff/.env
     depends_on:
       - service-auth
       - app-backend
+      - bff-redis
+    networks:
+      - unihub-workshop-network
 
-  adminer:
-    image: adminer:latest
-    container_name: adminer
-    ports:
-      - "8082:8080"
-    environment:
-      - ADMINER_DEFAULT_SERVER=app-db
-    depends_on:
-      - app-db
+volumes:
+  postgres_data: {}
 
-
-# for production volume
-# volumes:
-#   postgres_data:
+networks:
+  unihub-workshop-network: {}

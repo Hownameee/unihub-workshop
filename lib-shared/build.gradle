@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.github.hownameee'
+version = '0.0.1-SNAPSHOT'
+description = 'UniHub Workshop Shared Library'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

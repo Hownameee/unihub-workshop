@@ -1,0 +1,10 @@
+.git
+.gradle
+.idea
+**/.env
+**/.env.*
+!**/.env.example
+**/build
+**/dist
+**/node_modules
+**/target

@@ -1,0 +1,8 @@
+rootProject.name = 'unihub-workshop'
+
+include('app-backend')
+include('gateway-bff')
+include('service-payment')
+include('consumer-notification')
+include('consumer-summary-pdf')
+include('lib-shared')

@@ -8,11 +8,11 @@
         "starttls": "true",
         "auth": "true",
         "ssl": "false",
-        "from": "hownameee@gmail.com",
-        "fromDisplayName": "Unihub Workshop",
-        "replyTo": "hownameee@gmail.com",
-        "user": "hownameee@gmail.com",
-        "password": "crnx jijv rqyu ygph"
+        "from": "${KEYCLOAK_SMTP_FROM}",
+        "fromDisplayName": "${KEYCLOAK_SMTP_FROM_DISPLAY_NAME}",
+        "replyTo": "${KEYCLOAK_SMTP_REPLY_TO}",
+        "user": "${KEYCLOAK_SMTP_USER}",
+        "password": "${KEYCLOAK_SMTP_PASSWORD}"
     },
     "displayName": "Unihub Workshop",
     "clients": [

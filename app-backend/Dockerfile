@@ -1,11 +1,9 @@
-FROM maven:3.9.9-eclipse-temurin-21 AS builder
-WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline
-COPY src ./src
-RUN mvn package
+FROM eclipse-temurin:21-jre AS runtime
 
-FROM eclipse-temurin:21 AS runtime
-ARG JAR_FILE=target/*.jar
-COPY --from=builder /app/target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+WORKDIR /app
+
+COPY build/libs/app-backend-0.0.1-SNAPSHOT.jar app.jar
+
+EXPOSE 4000
+
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

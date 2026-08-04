@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: ${SERVER_PORT}
 
 spring:
   application:
@@ -9,10 +9,30 @@ spring:
     virtual:
       enabled: true
 
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST}
+      port: ${SPRING_DATA_REDIS_PORT}
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI}
+
   cloud:
     gateway:
-      routes:
-        - id: backend-service
-          uri: http://app-backend:4000
-          predicates:
-            - Path=/api/**
+      server:
+        webflux:
+          routes:
+            - id: backend-service
+              uri: ${BACKEND_SERVICE_URL}
+              predicates:
+                - Path=/api/**
+              filters:
+                - name: RequestRateLimiter
+                  args:
+                    redis-rate-limiter.replenishRate: 10
+                    redis-rate-limiter.burstCapacity: 20
+                    redis-rate-limiter.requestedTokens: 1
+                    key-resolver: "#{@userKeyResolver}"

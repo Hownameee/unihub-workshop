@@ -1,0 +1,86 @@
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true,
+		"root": "../"
+	},
+	"files": {
+		"includes": [
+			"**",
+			"!!**/dist",
+			"!!**/*.yaml",
+			"!!**/*.d.ts",
+			"!!public",
+			"!!src/lib/gen"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"indentWidth": 4,
+		"lineWidth": 80,
+		"expand": "never"
+	},
+	"linter": {
+		"enabled": true,
+		"includes": ["**/*.{ts,tsx}"],
+		"rules": {
+			"preset": "recommended",
+			"correctness": {
+				"noConstructorReturn": "error",
+				"noInnerDeclarations": "error",
+				"noInvalidUseBeforeDeclaration": "error",
+				"noUndeclaredVariables": "error",
+				"noUnusedVariables": "error",
+				"useExhaustiveDependencies": "error",
+				"useHookAtTopLevel": "error"
+			},
+			"style": {
+				"useBlockStatements": "error",
+				"useComponentExportOnlyModules": {
+					"level": "warn",
+					"options": { "allowConstantExport": true }
+				},
+				"useNamingConvention": {
+					"level": "error",
+					"options": {
+						"strictCase": false,
+						"conventions": [
+							{
+								"selector": { "kind": "any" },
+								"formats": [
+									"camelCase",
+									"PascalCase",
+									"CONSTANT_CASE"
+								]
+							}
+						]
+					}
+				}
+			},
+			"complexity": { "useLiteralKeys": "error" },
+			"performance": { "noAwaitInLoops": "error" },
+			"suspicious": {
+				"noUnassignedVariables": "error",
+				"useIterableCallbackReturn": "error",
+				"noConsole": {
+					"level": "error",
+					"options": { "allow": ["warn", "error"] }
+				}
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single",
+			"semicolons": "asNeeded",
+			"bracketSameLine": true
+		}
+	},
+	"assist": {
+		"enabled": true,
+		"actions": { "source": { "organizeImports": "on" } }
+	}
+}
