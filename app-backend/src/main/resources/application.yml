@@ -16,7 +16,7 @@ spring:
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     hikari:
-      connection-pool-name: WorkshopDB
+      pool-name: WorkshopDB
       maximum-pool-size: 30
       minimum-idle: 10
       idle-timeout: 30000
@@ -36,3 +36,5 @@ spring:
       hibernate:
         jdbc:
           time_zone: Asia/Ho_Chi_Minh
+  config:
+    import: optional:file:./.env[.properties]

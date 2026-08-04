@@ -62,9 +62,11 @@ cp service-auth/.env.example service-auth/.env
 ```
 
 Replace placeholder values before starting services. These `.env` files are
-ignored by Git. The example values use Docker service names such as `app-db`,
-`app-redis`, and `service-auth`; change them to `localhost` and published host
-ports when running an application directly on the host.
+ignored by Git. The backend example uses `localhost` so
+`./gradlew :app-backend:bootRun` can run directly on the host. The gateway and
+Keycloak examples use Docker service names. When the backend runs through the
+root Compose file, Compose overrides its database and Redis hosts with
+`app-db` and `app-redis`.
 
 ### Frontend development
 
