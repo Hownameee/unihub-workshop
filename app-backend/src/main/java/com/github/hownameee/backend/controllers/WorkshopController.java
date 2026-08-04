@@ -1,13 +1,22 @@
 package com.github.hownameee.backend.controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.github.hownameee.backend.dtos.WorkshopRequest;
 import com.github.hownameee.backend.dtos.WorkshopResponse;
 import com.github.hownameee.backend.dtos.WorkshopsResponse;
 import com.github.hownameee.backend.services.WorkshopService;
+
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/workshops")
@@ -18,18 +27,21 @@ public class WorkshopController {
 
     @GetMapping
     public ResponseEntity<WorkshopsResponse> getAllWorkshops() {
-        WorkshopsResponse response = new WorkshopsResponse(workshopService.getAllWorkshops());
+        WorkshopsResponse response =
+                new WorkshopsResponse(workshopService.getAllWorkshops());
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WorkshopResponse> getWorkshopById(@PathVariable Long id) {
+    public ResponseEntity<WorkshopResponse> getWorkshopById(
+            @PathVariable Long id) {
         WorkshopResponse response = workshopService.getWorkshopById(id);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public ResponseEntity<WorkshopResponse> createWorkshop(@RequestBody WorkshopRequest request) {
+    public ResponseEntity<WorkshopResponse> createWorkshop(
+            @RequestBody WorkshopRequest request) {
         WorkshopResponse response = workshopService.createWorkshop(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

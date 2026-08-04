@@ -1,13 +1,14 @@
 package com.github.hownameee.backend.mappers;
 
-import com.github.hownameee.backend.dtos.WorkshopRequest;
-import com.github.hownameee.backend.dtos.WorkshopResponse;
-import com.github.hownameee.backend.entities.WorkshopEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
+
+import com.github.hownameee.backend.dtos.WorkshopRequest;
+import com.github.hownameee.backend.dtos.WorkshopResponse;
+import com.github.hownameee.backend.entities.WorkshopEntity;
 
 @Mapper(
         componentModel = MappingConstants.ComponentModel.SPRING,
@@ -28,5 +29,6 @@ public interface WorkshopMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "deletedAt", ignore = true)
-    void updateEntity(WorkshopRequest request, @MappingTarget WorkshopEntity entity);
+    void updateEntity(
+            WorkshopRequest request, @MappingTarget WorkshopEntity entity);
 }

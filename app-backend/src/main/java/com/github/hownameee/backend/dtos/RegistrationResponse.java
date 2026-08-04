@@ -1,8 +1,9 @@
 package com.github.hownameee.backend.dtos;
 
-import com.github.hownameee.backend.entities.enums.RegistrationPaymentStatus;
 import java.time.OffsetDateTime;
 import java.util.UUID;
+
+import com.github.hownameee.backend.entities.enums.RegistrationPaymentStatus;
 
 public record RegistrationResponse(
     Long registrationId,

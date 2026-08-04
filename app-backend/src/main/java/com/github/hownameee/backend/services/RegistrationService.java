@@ -19,16 +19,22 @@ public class RegistrationService {
     final private RedisService redisService;
 
     @Autowired
-    public RegistrationService(RegistrationRepository registrationRepository, WorkshopRepository workshopRepository, RedisService redisService) {
+    public RegistrationService(
+            RegistrationRepository registrationRepository,
+            WorkshopRepository workshopRepository,
+            RedisService redisService) {
         this.redisService = redisService;
         this.registrationRepository = registrationRepository;
         this.workshopRepository = workshopRepository;
     }
 
     @Transactional
-    public RegistrationEntity registerWorkshop(Long workshopId, UUID userId, String fullName, String email) {
-        WorkshopEntity workshop = workshopRepository.findByWorkshopId(workshopId)
-                .orElseThrow(() -> new IllegalArgumentException("Workshop not found"));
+    public RegistrationEntity registerWorkshop(
+            Long workshopId, UUID userId, String fullName, String email) {
+        WorkshopEntity workshop =
+                workshopRepository.findByWorkshopId(workshopId)
+                        .orElseThrow(() -> new IllegalArgumentException(
+                                "Workshop not found"));
 
         if (!workshop.isRegistrationOpen()) {
             throw new IllegalArgumentException("Registration is not open");
@@ -39,7 +45,8 @@ public class RegistrationService {
             throw new IllegalArgumentException("Registration is full");
         }
 
-        WorkshopEntity workshopRef = workshopRepository.getReferenceById(workshopId);
+        WorkshopEntity workshopRef =
+                workshopRepository.getReferenceById(workshopId);
 
         RegistrationEntity registration = new RegistrationEntity();
         registration.setUserId(userId);

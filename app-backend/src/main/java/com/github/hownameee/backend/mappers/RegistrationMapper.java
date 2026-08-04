@@ -1,11 +1,12 @@
 package com.github.hownameee.backend.mappers;
 
-import com.github.hownameee.backend.dtos.RegistrationResponse;
-import com.github.hownameee.backend.entities.RegistrationEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
+
+import com.github.hownameee.backend.dtos.RegistrationResponse;
+import com.github.hownameee.backend.entities.RegistrationEntity;
 
 @Mapper(
         componentModel = MappingConstants.ComponentModel.SPRING,

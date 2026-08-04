@@ -46,7 +46,8 @@ public class RedisService {
     }
 
     public boolean reserveSlot(Long workshopId, UUID userId) {
-        String userKey = "workshop:" + workshopId + ":user:" + userId.toString();
+        String userKey =
+                "workshop:" + workshopId + ":user:" + userId.toString();
         String slotsKey = "workshop:" + workshopId + ":slots";
 
         Long result = redisTemplate.execute(
@@ -59,7 +60,8 @@ public class RedisService {
 
     public void releaseSlot(Long workshopId, UUID userId) {
         String slotsKey = "workshop:" + workshopId + ":slots";
-        String userKey = "workshop:" + workshopId + ":user:" + userId.toString();
+        String userKey =
+                "workshop:" + workshopId + ":user:" + userId.toString();
 
         Boolean deleted = redisTemplate.delete(userKey);
         if (deleted != null && deleted) {
@@ -68,7 +70,8 @@ public class RedisService {
     }
 
     public void confirmSlot(Long workshopId, UUID userId) {
-        String userKey = "workshop:" + workshopId + ":user:" + userId.toString();
+        String userKey =
+                "workshop:" + workshopId + ":user:" + userId.toString();
         redisTemplate.persist(userKey);
     }
 

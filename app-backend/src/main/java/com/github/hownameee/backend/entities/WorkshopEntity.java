@@ -1,11 +1,17 @@
 package com.github.hownameee.backend.entities;
 
-import jakarta.persistence.*;
+import java.time.OffsetDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "workshops")
@@ -51,6 +57,7 @@ public class WorkshopEntity {
 
     public boolean isRegistrationOpen() {
         OffsetDateTime now = OffsetDateTime.now();
-        return now.isAfter(this.registrationStartAt) && now.isBefore(this.registrationEndAt);
+        return now.isAfter(this.registrationStartAt)
+                && now.isBefore(this.registrationEndAt);
     }
 }

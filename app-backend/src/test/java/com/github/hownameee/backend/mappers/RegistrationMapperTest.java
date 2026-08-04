@@ -1,23 +1,27 @@
 package com.github.hownameee.backend.mappers;
 
+import java.time.OffsetDateTime;
+import java.util.UUID;
+
+import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
+
 import com.github.hownameee.backend.dtos.RegistrationResponse;
 import com.github.hownameee.backend.entities.RegistrationEntity;
 import com.github.hownameee.backend.entities.WorkshopEntity;
 import com.github.hownameee.backend.entities.enums.RegistrationPaymentStatus;
-import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
-
-import java.time.OffsetDateTime;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RegistrationMapperTest {
 
-    private static final OffsetDateTime CREATED_AT = OffsetDateTime.parse("2026-08-01T09:00:00+07:00");
-    private static final OffsetDateTime UPDATED_AT = OffsetDateTime.parse("2026-08-04T09:00:00+07:00");
+    private static final OffsetDateTime CREATED_AT =
+            OffsetDateTime.parse("2026-08-01T09:00:00+07:00");
+    private static final OffsetDateTime UPDATED_AT =
+            OffsetDateTime.parse("2026-08-04T09:00:00+07:00");
 
-    private final RegistrationMapper mapper = Mappers.getMapper(RegistrationMapper.class);
+    private final RegistrationMapper mapper =
+            Mappers.getMapper(RegistrationMapper.class);
 
     @Test
     void mapsRegistrationEntityToResponseWithWorkshopId() {

@@ -1,10 +1,8 @@
 package com.github.hownameee.backend.services;
 
-import com.github.hownameee.backend.dtos.WorkshopRequest;
-import com.github.hownameee.backend.dtos.WorkshopResponse;
-import com.github.hownameee.backend.entities.WorkshopEntity;
-import com.github.hownameee.backend.mappers.WorkshopMapper;
-import com.github.hownameee.backend.repositories.WorkshopRepository;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.github.hownameee.backend.dtos.WorkshopRequest;
+import com.github.hownameee.backend.dtos.WorkshopResponse;
+import com.github.hownameee.backend.entities.WorkshopEntity;
+import com.github.hownameee.backend.mappers.WorkshopMapper;
+import com.github.hownameee.backend.repositories.WorkshopRepository;
 
 @Service
 public class WorkshopService {
@@ -24,7 +24,9 @@ public class WorkshopService {
     private final WorkshopMapper workshopMapper;
 
     @Autowired
-    public WorkshopService(WorkshopRepository workshopRepository, RedisService redisService,
+    public WorkshopService(
+            WorkshopRepository workshopRepository,
+            RedisService redisService,
             WorkshopMapper workshopMapper) {
         this.workshopRepository = workshopRepository;
         this.redisService = redisService;
@@ -42,7 +44,8 @@ public class WorkshopService {
     public WorkshopResponse getWorkshopById(Long id) {
         WorkshopEntity entity = workshopRepository.findByWorkshopId(id)
                 .filter(w -> w.getDeletedAt() == null)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Workshop not found"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Workshop not found"));
         return workshopMapper.toResponse(entity);
     }
 
@@ -53,7 +56,8 @@ public class WorkshopService {
 
         WorkshopEntity saved = workshopRepository.save(entity);
 
-        redisService.initializeSlots(saved.getWorkshopId(), saved.getTotalCapacity());
+        redisService.initializeSlots(
+                saved.getWorkshopId(), saved.getTotalCapacity());
 
         return workshopMapper.toResponse(saved);
     }
@@ -62,14 +66,16 @@ public class WorkshopService {
     public WorkshopResponse updateWorkshop(Long id, WorkshopRequest request) {
         WorkshopEntity entity = workshopRepository.findByWorkshopId(id)
                 .filter(w -> w.getDeletedAt() == null)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Workshop not found"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Workshop not found"));
 
         workshopMapper.updateEntity(request, entity);
         entity.setUpdatedAt(OffsetDateTime.now());
 
         WorkshopEntity updated = workshopRepository.save(entity);
 
-        int remainingSlots = updated.getTotalCapacity() - updated.getRegisteredSeats();
+        int remainingSlots =
+                updated.getTotalCapacity() - updated.getRegisteredSeats();
         redisService.initializeSlots(updated.getWorkshopId(), remainingSlots);
 
         return workshopMapper.toResponse(updated);
@@ -79,7 +85,8 @@ public class WorkshopService {
     public void deleteWorkshop(Long id) {
         WorkshopEntity entity = workshopRepository.findByWorkshopId(id)
                 .filter(w -> w.getDeletedAt() == null)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Workshop not found"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Workshop not found"));
 
         entity.setDeletedAt(OffsetDateTime.now());
         workshopRepository.save(entity);

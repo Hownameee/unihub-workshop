@@ -1,24 +1,31 @@
 package com.github.hownameee.backend.mappers;
 
-import com.github.hownameee.backend.dtos.WorkshopRequest;
-import com.github.hownameee.backend.dtos.WorkshopResponse;
-import com.github.hownameee.backend.entities.WorkshopEntity;
+import java.time.OffsetDateTime;
+
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
-import java.time.OffsetDateTime;
+import com.github.hownameee.backend.dtos.WorkshopRequest;
+import com.github.hownameee.backend.dtos.WorkshopResponse;
+import com.github.hownameee.backend.entities.WorkshopEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class WorkshopMapperTest {
 
-    private static final OffsetDateTime REGISTRATION_START = OffsetDateTime.parse("2026-08-05T09:00:00+07:00");
-    private static final OffsetDateTime REGISTRATION_END = OffsetDateTime.parse("2026-08-05T17:00:00+07:00");
-    private static final OffsetDateTime CREATED_AT = OffsetDateTime.parse("2026-08-01T09:00:00+07:00");
-    private static final OffsetDateTime UPDATED_AT = OffsetDateTime.parse("2026-08-04T09:00:00+07:00");
-    private static final OffsetDateTime DELETED_AT = OffsetDateTime.parse("2026-08-04T10:00:00+07:00");
+    private static final OffsetDateTime REGISTRATION_START =
+            OffsetDateTime.parse("2026-08-05T09:00:00+07:00");
+    private static final OffsetDateTime REGISTRATION_END =
+            OffsetDateTime.parse("2026-08-05T17:00:00+07:00");
+    private static final OffsetDateTime CREATED_AT =
+            OffsetDateTime.parse("2026-08-01T09:00:00+07:00");
+    private static final OffsetDateTime UPDATED_AT =
+            OffsetDateTime.parse("2026-08-04T09:00:00+07:00");
+    private static final OffsetDateTime DELETED_AT =
+            OffsetDateTime.parse("2026-08-04T10:00:00+07:00");
 
-    private final WorkshopMapper mapper = Mappers.getMapper(WorkshopMapper.class);
+    private final WorkshopMapper mapper =
+            Mappers.getMapper(WorkshopMapper.class);
 
     @Test
     void mapsEntityToResponse() {
@@ -56,9 +63,11 @@ class WorkshopMapperTest {
         assertThat(entity.getWorkshopId()).isNull();
         assertThat(entity.getTitle()).isEqualTo("Spring Workshop");
         assertThat(entity.getDescription()).isEqualTo("Learn Spring");
-        assertThat(entity.getCoverImageUrl()).isEqualTo("https://example.com/cover.png");
+        assertThat(entity.getCoverImageUrl())
+                .isEqualTo("https://example.com/cover.png");
         assertThat(entity.getTotalCapacity()).isEqualTo(50);
-        assertThat(entity.getRegistrationStartAt()).isEqualTo(REGISTRATION_START);
+        assertThat(entity.getRegistrationStartAt())
+                .isEqualTo(REGISTRATION_START);
         assertThat(entity.getRegistrationEndAt()).isEqualTo(REGISTRATION_END);
         assertThat(entity.getRegisteredSeats()).isZero();
         assertThat(entity.getCreatedAt()).isNotNull();
@@ -84,9 +93,11 @@ class WorkshopMapperTest {
         assertThat(entity.getDeletedAt()).isEqualTo(DELETED_AT);
         assertThat(entity.getTitle()).isEqualTo("Spring Workshop");
         assertThat(entity.getDescription()).isEqualTo("Learn Spring");
-        assertThat(entity.getCoverImageUrl()).isEqualTo("https://example.com/cover.png");
+        assertThat(entity.getCoverImageUrl())
+                .isEqualTo("https://example.com/cover.png");
         assertThat(entity.getTotalCapacity()).isEqualTo(50);
-        assertThat(entity.getRegistrationStartAt()).isEqualTo(REGISTRATION_START);
+        assertThat(entity.getRegistrationStartAt())
+                .isEqualTo(REGISTRATION_START);
         assertThat(entity.getRegistrationEndAt()).isEqualTo(REGISTRATION_END);
     }
 

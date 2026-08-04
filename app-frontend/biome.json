@@ -1,28 +1,8 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-	"vcs": {
-		"enabled": true,
-		"clientKind": "git",
-		"useIgnoreFile": true,
-		"root": "../"
-	},
-	"files": {
-		"includes": [
-			"**",
-			"!!**/dist",
-			"!!**/*.yaml",
-			"!!**/*.d.ts",
-			"!!public",
-			"!!src/lib/gen"
-		]
-	},
-	"formatter": {
-		"enabled": true,
-		"indentStyle": "tab",
-		"indentWidth": 4,
-		"lineWidth": 80,
-		"expand": "never"
-	},
+	"vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true, "root": "../" },
+	"files": { "includes": ["**", "!!**/dist", "!!**/*.yaml", "!!**/*.d.ts", "!!public", "!!src/lib/gen"] },
+	"formatter": { "enabled": true, "indentStyle": "tab", "indentWidth": 4, "lineWidth": 120, "expand": "never" },
 	"linter": {
 		"enabled": true,
 		"includes": ["**/*.{ts,tsx}"],
@@ -39,23 +19,13 @@
 			},
 			"style": {
 				"useBlockStatements": "error",
-				"useComponentExportOnlyModules": {
-					"level": "warn",
-					"options": { "allowConstantExport": true }
-				},
+				"useComponentExportOnlyModules": { "level": "warn", "options": { "allowConstantExport": true } },
 				"useNamingConvention": {
 					"level": "error",
 					"options": {
 						"strictCase": false,
 						"conventions": [
-							{
-								"selector": { "kind": "any" },
-								"formats": [
-									"camelCase",
-									"PascalCase",
-									"CONSTANT_CASE"
-								]
-							}
+							{ "selector": { "kind": "any" }, "formats": ["camelCase", "PascalCase", "CONSTANT_CASE"] }
 						]
 					}
 				}
@@ -65,22 +35,10 @@
 			"suspicious": {
 				"noUnassignedVariables": "error",
 				"useIterableCallbackReturn": "error",
-				"noConsole": {
-					"level": "error",
-					"options": { "allow": ["warn", "error"] }
-				}
+				"noConsole": { "level": "error", "options": { "allow": ["warn", "error"] } }
 			}
 		}
 	},
-	"javascript": {
-		"formatter": {
-			"quoteStyle": "single",
-			"semicolons": "asNeeded",
-			"bracketSameLine": true
-		}
-	},
-	"assist": {
-		"enabled": true,
-		"actions": { "source": { "organizeImports": "on" } }
-	}
+	"javascript": { "formatter": { "quoteStyle": "single", "semicolons": "asNeeded", "bracketSameLine": true } },
+	"assist": { "enabled": true, "actions": { "source": { "organizeImports": "on" } } }
 }
