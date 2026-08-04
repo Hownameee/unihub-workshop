@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: gateway-bff
+  jackson:
+    time-zone: Asia/Ho_Chi_Minh
 
   threads:
     virtual:
