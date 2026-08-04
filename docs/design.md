@@ -29,7 +29,7 @@ config:
 ---
 flowchart TB
     Client["🌍 Client - Browser or App"] -- Internet --> Nginx["🛡️ Nginx - Reverse Proxy and IP Rate Limit"]
-    Nginx -- "/ - HTML CSS JS and SSR" --> NextJS["💻 Next.js Frontend"]
+    Nginx -- "/ - static HTML CSS and JS" --> Frontend["💻 React SPA served by Nginx"]
     Nginx -- /auth path --> Keycloak["🔑 Keycloak - IAM"]
     Nginx -- /api path --> BFF["⚡ BFF - Spring Cloud Gateway"]
     BFF -- Token Bucket Rate Limit --> RedisBFF[("🔴 Redis - BFF Rate Limit")]
@@ -45,7 +45,7 @@ flowchart TB
 
      Client:::clientStyle
      Nginx:::proxyStyle
-     NextJS:::frontendStyle
+     Frontend:::frontendStyle
      Keycloak:::authStyle
      BFF:::bffStyle
      RedisBFF:::cacheStyle
@@ -88,13 +88,13 @@ flowchart TB
 
 ### 3.2. Presentation Layer
 
-#### 💻 Next.js Frontend
-* **Technology:** Next.js (React Framework, SSR & CSR)
+#### 💻 React SPA Frontend
+* **Technology:** React 19, Vite, TypeScript, and Nginx
 * **Responsibilities:**
-  * Serves client-side web application bundle.
-  * Executes Server-Side Rendering (SSR) for SEO optimization.
-  * Routes client API calls to the `/api/*` path, which is handled externally by the BFF.
-  * Accesses backend APIs from the server node internally via `http://bff-gateway:8081`.
+  * Builds and serves the client-side application as static HTML, CSS, and JavaScript assets.
+  * Uses Nginx to serve the SPA and fall back to `index.html` for client-side routes.
+  * Sends API requests through the public `/api/*` path to the BFF.
+  * Runs entirely in the browser after Nginx serves the static bundle.
 
 #### 🔑 Keycloak (Identity & Access Management)
 * **Technology:** Keycloak (OAuth2 / OpenID Connect Identity Provider)
@@ -185,6 +185,6 @@ flowchart TB
 
 | Path | Destination Service | Internal Endpoint | Authentication | Rate Limit |
 | :--- | :--- | :--- | :--- | :--- |
-| `/` | Next.js Frontend | `http://frontend:3000` | No | IP-based |
-| `/auth/*` | Keycloak | `http://keycloak:8080` | Managed by Keycloak | IP-based |
-| `/api/*` | BFF (Spring Cloud) | `http://bff-gateway:8081` | JWT validated at BFF | IP-based + User-based |
+| `/` | React SPA (Nginx) | `http://app-frontend:80` | No | IP-based |
+| `/auth/*` | Keycloak | `http://service-auth:8080` | Managed by Keycloak | IP-based |
+| `/api/*` | BFF (Spring Cloud) | `http://gateway-bff:8081` | JWT validated at BFF | IP-based + User-based |
