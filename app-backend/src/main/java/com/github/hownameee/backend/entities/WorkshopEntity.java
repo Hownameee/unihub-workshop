@@ -1,10 +1,17 @@
 package com.github.hownameee.backend.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "workshops")
+@Getter
+@Setter
+@NoArgsConstructor
 public class WorkshopEntity {
 
     @Id
@@ -42,100 +49,8 @@ public class WorkshopEntity {
     @Column(name = "deleted_at")
     private OffsetDateTime deletedAt;
 
-    public WorkshopEntity() {
-    }
-
-    public Long getWorkshopId() {
-        return workshopId;
-    }
-
-    public void setWorkshopId(Long workshopId) {
-        this.workshopId = workshopId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCoverImageUrl() {
-        return coverImageUrl;
-    }
-
-    public void setCoverImageUrl(String coverImageUrl) {
-        this.coverImageUrl = coverImageUrl;
-    }
-
-    public Integer getTotalCapacity() {
-        return totalCapacity;
-    }
-
-    public void setTotalCapacity(Integer totalCapacity) {
-        this.totalCapacity = totalCapacity;
-    }
-
-    public Integer getRegisteredSeats() {
-        return registeredSeats;
-    }
-
-    public void setRegisteredSeats(Integer registeredSeats) {
-        this.registeredSeats = registeredSeats;
-    }
-
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(OffsetDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public OffsetDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(OffsetDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public OffsetDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(OffsetDateTime deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    public OffsetDateTime getRegistrationStartAt() {
-        return registrationStartAt;
-    }
-
-    public void setRegistrationStartAt(OffsetDateTime registrationStartAt) {
-        this.registrationStartAt = registrationStartAt;
-    }
-
-    public OffsetDateTime getRegistrationEndAt() {
-        return registrationEndAt;
-    }
-
-    public void setRegistrationEndAt(OffsetDateTime registrationEndAt) {
-        this.registrationEndAt = registrationEndAt;
-    }
-
     public boolean isRegistrationOpen() {
         OffsetDateTime now = OffsetDateTime.now();
         return now.isAfter(this.registrationStartAt) && now.isBefore(this.registrationEndAt);
-
     }
 }

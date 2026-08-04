@@ -1,6 +1,9 @@
 package com.github.hownameee.backend.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -11,6 +14,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "registrations")
+@Getter
+@Setter
+@NoArgsConstructor
 public class RegistrationEntity {
 
     @Id
@@ -44,79 +50,4 @@ public class RegistrationEntity {
 
     @Column(name = "deleted_at")
     private OffsetDateTime deletedAt;
-
-    public RegistrationEntity() {
-    }
-
-    public Long getRegistrationId() {
-        return registrationId;
-    }
-
-    public void setRegistrationId(Long registrationId) {
-        this.registrationId = registrationId;
-    }
-
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-    public WorkshopEntity getWorkshop() {
-        return workshop;
-    }
-
-    public void setWorkshop(WorkshopEntity workshop) {
-        this.workshop = workshop;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public RegistrationPaymentStatus getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public void setPaymentStatus(RegistrationPaymentStatus paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(OffsetDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public OffsetDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(OffsetDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public OffsetDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(OffsetDateTime deletedAt) {
-        this.deletedAt = deletedAt;
-    }
 }

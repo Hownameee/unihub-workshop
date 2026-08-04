@@ -4,19 +4,17 @@ import com.github.hownameee.backend.dtos.WorkshopRequest;
 import com.github.hownameee.backend.dtos.WorkshopResponse;
 import com.github.hownameee.backend.dtos.WorkshopsResponse;
 import com.github.hownameee.backend.services.WorkshopService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/workshops")
+@AllArgsConstructor
 public class WorkshopController {
 
     private final WorkshopService workshopService;
-
-    public WorkshopController(WorkshopService workshopService) {
-        this.workshopService = workshopService;
-    }
 
     @GetMapping
     public ResponseEntity<WorkshopsResponse> getAllWorkshops() {
