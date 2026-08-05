@@ -25,6 +25,38 @@ services:
     networks:
       - unihub-workshop-network-dev
 
+  bff-redis:
+    image: redis:8.8.0-alpine3.23
+    container_name: bff-redis
+    ports:
+      - "6380:6379"
+    networks:
+      - unihub-workshop-network-dev
+
+  service-auth:
+    image: quay.io/keycloak/keycloak:26.7.0
+    container_name: service-auth
+    ports:
+      - "8080:8080"
+    env_file:
+      - ../service-auth/.env
+    environment:
+      - KC_HOSTNAME=localhost
+      - KC_HTTP_RELATIVE_PATH=/auth
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB_USERNAME=postgres
+      - KC_DB_PASSWORD=postgres
+      - KC_DB_URL=jdbc:postgresql://app-db:5432/postgres
+      - KC_DB=postgres
+    volumes:
+      - ../service-auth/realm-export.json:/opt/keycloak/data/import/realm-export.json:ro
+    command: start-dev --import-realm
+    depends_on:
+      - app-db
+    networks:
+      - unihub-workshop-network-dev
+
 volumes:
   postgres_data-dev: {}
 
