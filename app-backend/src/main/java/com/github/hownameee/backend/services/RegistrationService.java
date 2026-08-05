@@ -18,17 +18,17 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class RegistrationService {
-    final private RegistrationRepository registrationRepository;
-    final private WorkshopRepository workshopRepository;
-    final private RedisService redisService;
+    private final RegistrationRepository registrationRepository;
+    private final WorkshopRepository workshopRepository;
+    private final RedisService redisService;
 
     @Transactional
     public RegistrationEntity registerWorkshop(
             Long workshopId, UUID userId, String fullName, String email) {
         WorkshopEntity workshop =
-                workshopRepository.findByWorkshopId(workshopId)
-                        .orElseThrow(() -> new IllegalArgumentException(
-                                "Workshop not found"));
+                workshopRepository
+                        .findByWorkshopId(workshopId)
+                        .orElseThrow(() -> new IllegalArgumentException("Workshop not found"));
 
         if (!workshop.isRegistrationOpen()) {
             throw new RegistrationNotOpenException(workshopId);
@@ -39,8 +39,7 @@ public class RegistrationService {
             throw new WorkshopFullException(workshopId);
         }
 
-        WorkshopEntity workshopRef =
-                workshopRepository.getReferenceById(workshopId);
+        WorkshopEntity workshopRef = workshopRepository.getReferenceById(workshopId);
 
         RegistrationEntity registration = new RegistrationEntity();
         registration.setUserId(userId);
@@ -51,5 +50,4 @@ public class RegistrationService {
 
         return registrationRepository.save(registration);
     }
-
 }

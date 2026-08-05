@@ -43,6 +43,7 @@ tasks.named('test') {
 spotless {
     java {
         target 'src/**/*.java'
+        googleJavaFormat('1.35.0').aosp().reorderImports(false)
         importOrder('java', 'javax', 'jakarta', 'org', 'com', 'lombok', '\\#')
         removeUnusedImports()
         trimTrailingWhitespace()

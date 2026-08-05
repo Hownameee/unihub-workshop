@@ -59,7 +59,6 @@ public class WorkshopEntity {
 
     public boolean isRegistrationOpen() {
         OffsetDateTime now = TimeUtils.now();
-        return now.isAfter(this.registrationStartAt)
-                && now.isBefore(this.registrationEndAt);
+        return now.isAfter(this.registrationStartAt) && now.isBefore(this.registrationEndAt);
     }
 }

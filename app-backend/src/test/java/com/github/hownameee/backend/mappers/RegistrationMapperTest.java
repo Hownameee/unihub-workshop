@@ -20,8 +20,7 @@ class RegistrationMapperTest {
     private static final OffsetDateTime UPDATED_AT =
             OffsetDateTime.parse("2026-08-04T09:00:00+07:00");
 
-    private final RegistrationMapper mapper =
-            Mappers.getMapper(RegistrationMapper.class);
+    private final RegistrationMapper mapper = Mappers.getMapper(RegistrationMapper.class);
 
     @Test
     void mapsRegistrationEntityToResponseWithWorkshopId() {
@@ -41,14 +40,16 @@ class RegistrationMapperTest {
 
         RegistrationResponse response = mapper.toResponse(entity);
 
-        assertThat(response).isEqualTo(new RegistrationResponse(
-                20L,
-                10L,
-                userId,
-                "Nam Nguyen",
-                "nam@example.com",
-                RegistrationPaymentStatus.PENDING,
-                CREATED_AT,
-                UPDATED_AT));
+        assertThat(response)
+                .isEqualTo(
+                        new RegistrationResponse(
+                                20L,
+                                10L,
+                                userId,
+                                "Nam Nguyen",
+                                "nam@example.com",
+                                RegistrationPaymentStatus.PENDING,
+                                CREATED_AT,
+                                UPDATED_AT));
     }
 }

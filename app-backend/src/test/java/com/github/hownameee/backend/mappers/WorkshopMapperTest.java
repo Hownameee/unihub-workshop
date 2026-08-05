@@ -24,8 +24,7 @@ class WorkshopMapperTest {
     private static final OffsetDateTime DELETED_AT =
             OffsetDateTime.parse("2026-08-04T10:00:00+07:00");
 
-    private final WorkshopMapper mapper =
-            Mappers.getMapper(WorkshopMapper.class);
+    private final WorkshopMapper mapper = Mappers.getMapper(WorkshopMapper.class);
 
     @Test
     void mapsEntityToResponse() {
@@ -43,17 +42,19 @@ class WorkshopMapperTest {
 
         WorkshopResponse response = mapper.toResponse(entity);
 
-        assertThat(response).isEqualTo(new WorkshopResponse(
-                10L,
-                "Spring Workshop",
-                "Learn Spring",
-                "https://example.com/cover.png",
-                50,
-                12,
-                REGISTRATION_START,
-                REGISTRATION_END,
-                CREATED_AT,
-                UPDATED_AT));
+        assertThat(response)
+                .isEqualTo(
+                        new WorkshopResponse(
+                                10L,
+                                "Spring Workshop",
+                                "Learn Spring",
+                                "https://example.com/cover.png",
+                                50,
+                                12,
+                                REGISTRATION_START,
+                                REGISTRATION_END,
+                                CREATED_AT,
+                                UPDATED_AT));
     }
 
     @Test
@@ -63,11 +64,9 @@ class WorkshopMapperTest {
         assertThat(entity.getWorkshopId()).isNull();
         assertThat(entity.getTitle()).isEqualTo("Spring Workshop");
         assertThat(entity.getDescription()).isEqualTo("Learn Spring");
-        assertThat(entity.getCoverImageUrl())
-                .isEqualTo("https://example.com/cover.png");
+        assertThat(entity.getCoverImageUrl()).isEqualTo("https://example.com/cover.png");
         assertThat(entity.getTotalCapacity()).isEqualTo(50);
-        assertThat(entity.getRegistrationStartAt())
-                .isEqualTo(REGISTRATION_START);
+        assertThat(entity.getRegistrationStartAt()).isEqualTo(REGISTRATION_START);
         assertThat(entity.getRegistrationEndAt()).isEqualTo(REGISTRATION_END);
         assertThat(entity.getRegisteredSeats()).isZero();
         assertThat(entity.getCreatedAt()).isNotNull();
@@ -93,11 +92,9 @@ class WorkshopMapperTest {
         assertThat(entity.getDeletedAt()).isEqualTo(DELETED_AT);
         assertThat(entity.getTitle()).isEqualTo("Spring Workshop");
         assertThat(entity.getDescription()).isEqualTo("Learn Spring");
-        assertThat(entity.getCoverImageUrl())
-                .isEqualTo("https://example.com/cover.png");
+        assertThat(entity.getCoverImageUrl()).isEqualTo("https://example.com/cover.png");
         assertThat(entity.getTotalCapacity()).isEqualTo(50);
-        assertThat(entity.getRegistrationStartAt())
-                .isEqualTo(REGISTRATION_START);
+        assertThat(entity.getRegistrationStartAt()).isEqualTo(REGISTRATION_START);
         assertThat(entity.getRegistrationEndAt()).isEqualTo(REGISTRATION_END);
     }
 

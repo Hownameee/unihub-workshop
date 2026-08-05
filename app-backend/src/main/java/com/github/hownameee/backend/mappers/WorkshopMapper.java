@@ -29,6 +29,5 @@ public interface WorkshopMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "deletedAt", ignore = true)
-    void updateEntity(
-            WorkshopRequest request, @MappingTarget WorkshopEntity entity);
+    void updateEntity(WorkshopRequest request, @MappingTarget WorkshopEntity entity);
 }

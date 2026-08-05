@@ -22,21 +22,24 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleEntityNotFound(
             EntityNotFoundException ex, HttpServletRequest request) {
-        log.warn("[404 Not Found] Resource not found at {} {}. Details: {}",
-                request.getMethod(), request.getRequestURI(), ex.getMessage());
+        log.warn(
+                "[404 Not Found] Resource not found at {} {}. Details: {}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex.getMessage());
 
         return buildError(
-                HttpStatus.NOT_FOUND,
-                "Resource Not Found",
-                "resource_not_found",
-                ex.getMessage());
+                HttpStatus.NOT_FOUND, "Resource Not Found", "resource_not_found", ex.getMessage());
     }
 
     @ExceptionHandler(RegistrationNotOpenException.class)
     public ResponseEntity<ErrorResponse> handleRegistrationNotOpen(
             RegistrationNotOpenException ex, HttpServletRequest request) {
-        log.warn("[409 Conflict] Registration is not open at {} {}. Details: {}",
-                request.getMethod(), request.getRequestURI(), ex.getMessage());
+        log.warn(
+                "[409 Conflict] Registration is not open at {} {}. Details: {}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex.getMessage());
 
         return buildError(
                 HttpStatus.CONFLICT,
@@ -48,26 +51,19 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(WorkshopFullException.class)
     public ResponseEntity<ErrorResponse> handleWorkshopFull(
             WorkshopFullException ex, HttpServletRequest request) {
-        log.warn("[409 Conflict] Workshop is full at {} {}. Details: {}",
-                request.getMethod(), request.getRequestURI(), ex.getMessage());
-
-        return buildError(
-                HttpStatus.CONFLICT,
-                "Workshop Full",
-                "workshop_full",
+        log.warn(
+                "[409 Conflict] Workshop is full at {} {}. Details: {}",
+                request.getMethod(),
+                request.getRequestURI(),
                 ex.getMessage());
+
+        return buildError(HttpStatus.CONFLICT, "Workshop Full", "workshop_full", ex.getMessage());
     }
 
     private ResponseEntity<ErrorResponse> buildError(
-            HttpStatus status,
-            String error,
-            String code,
-            String message) {
-        ErrorResponse response = new ErrorResponse(
-                TimeUtils.now(), error, code, message);
+            HttpStatus status, String error, String code, String message) {
+        ErrorResponse response = new ErrorResponse(TimeUtils.now(), error, code, message);
 
-        return ResponseEntity
-                .status(status)
-                .body(response);
+        return ResponseEntity.status(status).body(response);
     }
 }

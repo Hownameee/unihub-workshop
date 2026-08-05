@@ -27,29 +27,25 @@ public class WorkshopController {
 
     @GetMapping
     public ResponseEntity<WorkshopsResponse> getAllWorkshops() {
-        WorkshopsResponse response =
-                new WorkshopsResponse(workshopService.getAllWorkshops());
+        WorkshopsResponse response = new WorkshopsResponse(workshopService.getAllWorkshops());
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WorkshopResponse> getWorkshopById(
-            @PathVariable Long id) {
+    public ResponseEntity<WorkshopResponse> getWorkshopById(@PathVariable Long id) {
         WorkshopResponse response = workshopService.getWorkshopById(id);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public ResponseEntity<WorkshopResponse> createWorkshop(
-            @RequestBody WorkshopRequest request) {
+    public ResponseEntity<WorkshopResponse> createWorkshop(@RequestBody WorkshopRequest request) {
         WorkshopResponse response = workshopService.createWorkshop(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<WorkshopResponse> updateWorkshop(
-            @PathVariable Long id,
-            @RequestBody WorkshopRequest request) {
+            @PathVariable Long id, @RequestBody WorkshopRequest request) {
         WorkshopResponse response = workshopService.updateWorkshop(id, request);
         return ResponseEntity.ok(response);
     }

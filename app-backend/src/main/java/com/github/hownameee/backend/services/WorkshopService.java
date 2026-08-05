@@ -34,9 +34,11 @@ public class WorkshopService {
 
     @Transactional(readOnly = true)
     public WorkshopResponse getWorkshopById(Long id) {
-        WorkshopEntity entity = workshopRepository.findByWorkshopId(id)
-                .filter(w -> w.getDeletedAt() == null)
-                .orElseThrow(() -> new EntityNotFoundException("Workshop not found"));
+        WorkshopEntity entity =
+                workshopRepository
+                        .findByWorkshopId(id)
+                        .filter(w -> w.getDeletedAt() == null)
+                        .orElseThrow(() -> new EntityNotFoundException("Workshop not found"));
         return workshopMapper.toResponse(entity);
     }
 
@@ -47,25 +49,25 @@ public class WorkshopService {
 
         WorkshopEntity saved = workshopRepository.save(entity);
 
-        redisService.initializeSlots(
-                saved.getWorkshopId(), saved.getTotalCapacity());
+        redisService.initializeSlots(saved.getWorkshopId(), saved.getTotalCapacity());
 
         return workshopMapper.toResponse(saved);
     }
 
     @Transactional
     public WorkshopResponse updateWorkshop(Long id, WorkshopRequest request) {
-        WorkshopEntity entity = workshopRepository.findByWorkshopId(id)
-                .filter(w -> w.getDeletedAt() == null)
-                .orElseThrow(() -> new EntityNotFoundException("Workshop not found"));
+        WorkshopEntity entity =
+                workshopRepository
+                        .findByWorkshopId(id)
+                        .filter(w -> w.getDeletedAt() == null)
+                        .orElseThrow(() -> new EntityNotFoundException("Workshop not found"));
 
         workshopMapper.updateEntity(request, entity);
         entity.setUpdatedAt(TimeUtils.now());
 
         WorkshopEntity updated = workshopRepository.save(entity);
 
-        int remainingSlots =
-                updated.getTotalCapacity() - updated.getRegisteredSeats();
+        int remainingSlots = updated.getTotalCapacity() - updated.getRegisteredSeats();
         redisService.initializeSlots(updated.getWorkshopId(), remainingSlots);
 
         return workshopMapper.toResponse(updated);
@@ -73,12 +75,13 @@ public class WorkshopService {
 
     @Transactional
     public void deleteWorkshop(Long id) {
-        WorkshopEntity entity = workshopRepository.findByWorkshopId(id)
-                .filter(w -> w.getDeletedAt() == null)
-                .orElseThrow(() -> new EntityNotFoundException("Workshop not found"));
+        WorkshopEntity entity =
+                workshopRepository
+                        .findByWorkshopId(id)
+                        .filter(w -> w.getDeletedAt() == null)
+                        .orElseThrow(() -> new EntityNotFoundException("Workshop not found"));
 
         entity.setDeletedAt(TimeUtils.now());
         workshopRepository.save(entity);
     }
-
 }

@@ -15,9 +15,11 @@ public class RedisService {
     private StringRedisTemplate redisTemplate;
 
     private static final DefaultRedisScript<Long> RESERVE_SCRIPT;
+
     static {
         RESERVE_SCRIPT = new DefaultRedisScript<>();
-        RESERVE_SCRIPT.setScriptText("""
+        RESERVE_SCRIPT.setScriptText(
+                """
                 local userKey = KEYS[1]
                 local slotsKey = KEYS[2]
                 local ttl = tonumber(ARGV[1])
@@ -44,22 +46,18 @@ public class RedisService {
     }
 
     public boolean reserveSlot(Long workshopId, UUID userId) {
-        String userKey =
-                "workshop:" + workshopId + ":user:" + userId.toString();
+        String userKey = "workshop:" + workshopId + ":user:" + userId.toString();
         String slotsKey = "workshop:" + workshopId + ":slots";
 
-        Long result = redisTemplate.execute(
-                RESERVE_SCRIPT,
-                java.util.List.of(userKey, slotsKey),
-                "900");
+        Long result =
+                redisTemplate.execute(RESERVE_SCRIPT, java.util.List.of(userKey, slotsKey), "900");
 
         return result != null && result == 1L;
     }
 
     public void releaseSlot(Long workshopId, UUID userId) {
         String slotsKey = "workshop:" + workshopId + ":slots";
-        String userKey =
-                "workshop:" + workshopId + ":user:" + userId.toString();
+        String userKey = "workshop:" + workshopId + ":user:" + userId.toString();
 
         Boolean deleted = redisTemplate.delete(userKey);
         if (deleted != null && deleted) {
@@ -68,8 +66,7 @@ public class RedisService {
     }
 
     public void confirmSlot(Long workshopId, UUID userId) {
-        String userKey =
-                "workshop:" + workshopId + ":user:" + userId.toString();
+        String userKey = "workshop:" + workshopId + ":user:" + userId.toString();
         redisTemplate.persist(userKey);
     }
 

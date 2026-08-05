@@ -24,16 +24,14 @@ public class RegistrationController {
     private final RegistrationMapper registrationMapper;
 
     @PostMapping
-    public ResponseEntity<RegistrationResponse> register(
-            @RequestBody RegistrationRequest request) {
-        RegistrationEntity entity = registrationService.registerWorkshop(
-                request.workshopId(),
-                request.userId(),
-                request.fullName(),
-                request.email()
-        );
+    public ResponseEntity<RegistrationResponse> register(@RequestBody RegistrationRequest request) {
+        RegistrationEntity entity =
+                registrationService.registerWorkshop(
+                        request.workshopId(),
+                        request.userId(),
+                        request.fullName(),
+                        request.email());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(registrationMapper.toResponse(entity));
     }
-
 }
