@@ -1,2 +1,2 @@
 (cd app-frontend && npm run lint && npm run format)
-./gradlew :app-backend:spotlessCheck
+./gradlew :app-backend:spotlessCheck :gateway-bff:spotlessCheck
