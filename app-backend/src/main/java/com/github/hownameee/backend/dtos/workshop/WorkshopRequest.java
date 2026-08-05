@@ -1,4 +1,4 @@
-package com.github.hownameee.backend.dtos;
+package com.github.hownameee.backend.dtos.workshop;
 
 import java.time.OffsetDateTime;
 

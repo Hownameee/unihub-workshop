@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
-import com.github.hownameee.backend.dtos.RegistrationResponse;
+import com.github.hownameee.backend.dtos.registration.RegistrationResponse;
 import com.github.hownameee.backend.entities.RegistrationEntity;
 import com.github.hownameee.backend.entities.WorkshopEntity;
 import com.github.hownameee.backend.entities.enums.RegistrationPaymentStatus;

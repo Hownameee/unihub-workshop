@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.hownameee.backend.dtos.WorkshopRequest;
-import com.github.hownameee.backend.dtos.WorkshopResponse;
-import com.github.hownameee.backend.dtos.WorkshopsResponse;
+import com.github.hownameee.backend.dtos.workshop.WorkshopRequest;
+import com.github.hownameee.backend.dtos.workshop.WorkshopResponse;
+import com.github.hownameee.backend.dtos.workshop.WorkshopsResponse;
 import com.github.hownameee.backend.services.WorkshopService;
 
 import lombok.AllArgsConstructor;

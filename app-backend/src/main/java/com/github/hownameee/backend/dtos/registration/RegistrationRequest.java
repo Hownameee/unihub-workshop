@@ -1,4 +1,4 @@
-package com.github.hownameee.backend.dtos;
+package com.github.hownameee.backend.dtos.registration;
 
 import java.util.UUID;
 

@@ -6,8 +6,8 @@ import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
-import com.github.hownameee.backend.dtos.WorkshopRequest;
-import com.github.hownameee.backend.dtos.WorkshopResponse;
+import com.github.hownameee.backend.dtos.workshop.WorkshopRequest;
+import com.github.hownameee.backend.dtos.workshop.WorkshopResponse;
 import com.github.hownameee.backend.entities.WorkshopEntity;
 
 @Mapper(

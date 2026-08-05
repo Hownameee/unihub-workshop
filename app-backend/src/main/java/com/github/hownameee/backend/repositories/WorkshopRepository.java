@@ -9,8 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.github.hownameee.backend.entities.WorkshopEntity;
 
 @Repository
-public interface WorkshopRepository
-        extends JpaRepository<WorkshopEntity, Long> {
+public interface WorkshopRepository extends JpaRepository<WorkshopEntity, Long> {
     List<WorkshopEntity> findAllByDeletedAtIsNull();
 
     Optional<WorkshopEntity> findByWorkshopId(Long workshopId);

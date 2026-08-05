@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 
-import com.github.hownameee.backend.dtos.RegistrationResponse;
+import com.github.hownameee.backend.dtos.registration.RegistrationResponse;
 import com.github.hownameee.backend.entities.RegistrationEntity;
 
 @Mapper(

@@ -19,6 +19,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import com.github.hownameee.backend.entities.enums.PaymentTransactionStatus;
+import com.github.hownameee.backend.utils.TimeUtils;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,8 +53,8 @@ public class PaymentEntity {
     private String transactionId;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private OffsetDateTime createdAt = OffsetDateTime.now();
+    private OffsetDateTime createdAt = TimeUtils.now();
 
     @Column(name = "updated_at", nullable = false)
-    private OffsetDateTime updatedAt = OffsetDateTime.now();
+    private OffsetDateTime updatedAt = TimeUtils.now();
 }

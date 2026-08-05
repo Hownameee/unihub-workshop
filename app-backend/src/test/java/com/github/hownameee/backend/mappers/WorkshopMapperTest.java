@@ -5,8 +5,8 @@ import java.time.OffsetDateTime;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
-import com.github.hownameee.backend.dtos.WorkshopRequest;
-import com.github.hownameee.backend.dtos.WorkshopResponse;
+import com.github.hownameee.backend.dtos.workshop.WorkshopRequest;
+import com.github.hownameee.backend.dtos.workshop.WorkshopResponse;
 import com.github.hownameee.backend.entities.WorkshopEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;

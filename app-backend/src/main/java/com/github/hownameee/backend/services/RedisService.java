@@ -2,14 +2,16 @@ package com.github.hownameee.backend.services;
 
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class RedisService {
-    @Autowired
+
     private StringRedisTemplate redisTemplate;
 
     private static final DefaultRedisScript<Long> RESERVE_SCRIPT;
@@ -34,10 +36,6 @@ public class RedisService {
                 return 1
                 """);
         RESERVE_SCRIPT.setResultType(Long.class);
-    }
-
-    private void set(String key, String value) {
-        redisTemplate.opsForValue().set(key, value);
     }
 
     public void initializeSlots(Long workshopId, int totalCapacity) {
@@ -79,5 +77,9 @@ public class RedisService {
         String key = "workshop:" + workshopId + ":slots";
         Boolean exists = redisTemplate.hasKey(key);
         return exists != null && exists;
+    }
+
+    private void set(String key, String value) {
+        redisTemplate.opsForValue().set(key, value);
     }
 }

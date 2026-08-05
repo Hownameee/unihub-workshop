@@ -6,6 +6,4 @@ import org.springframework.stereotype.Repository;
 import com.github.hownameee.backend.entities.PaymentEntity;
 
 @Repository
-public interface PaymentRepository extends JpaRepository<PaymentEntity, Long> {
-
-}
+public interface PaymentRepository extends JpaRepository<PaymentEntity, Long> {}

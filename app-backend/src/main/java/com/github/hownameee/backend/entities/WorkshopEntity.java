@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import com.github.hownameee.backend.utils.TimeUtils;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -47,16 +49,16 @@ public class WorkshopEntity {
     private OffsetDateTime registrationEndAt;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private OffsetDateTime createdAt = OffsetDateTime.now();
+    private OffsetDateTime createdAt = TimeUtils.now();
 
     @Column(name = "updated_at", nullable = false)
-    private OffsetDateTime updatedAt = OffsetDateTime.now();
+    private OffsetDateTime updatedAt = TimeUtils.now();
 
     @Column(name = "deleted_at")
     private OffsetDateTime deletedAt;
 
     public boolean isRegistrationOpen() {
-        OffsetDateTime now = OffsetDateTime.now();
+        OffsetDateTime now = TimeUtils.now();
         return now.isAfter(this.registrationStartAt)
                 && now.isBefore(this.registrationEndAt);
     }
