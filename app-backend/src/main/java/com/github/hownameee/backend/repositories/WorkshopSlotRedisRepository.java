@@ -1,16 +1,16 @@
-package com.github.hownameee.backend.services;
+package com.github.hownameee.backend.repositories;
 
 import java.util.UUID;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import lombok.AllArgsConstructor;
 
-@Service
+@Repository
 @AllArgsConstructor
-public class RedisService {
+public class WorkshopSlotRedisRepository {
 
     private StringRedisTemplate redisTemplate;
 

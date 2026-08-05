@@ -2,6 +2,8 @@ package com.github.hownameee.backend.services;
 
 import java.util.UUID;
 
+import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +14,7 @@ import com.github.hownameee.backend.exceptions.RegistrationNotOpenException;
 import com.github.hownameee.backend.exceptions.WorkshopFullException;
 import com.github.hownameee.backend.repositories.RegistrationRepository;
 import com.github.hownameee.backend.repositories.WorkshopRepository;
+import com.github.hownameee.backend.repositories.WorkshopSlotRedisRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -20,7 +23,7 @@ import lombok.AllArgsConstructor;
 public class RegistrationService {
     private final RegistrationRepository registrationRepository;
     private final WorkshopRepository workshopRepository;
-    private final RedisService redisService;
+    private final WorkshopSlotRedisRepository workshopSlotRedisRepository;
 
     @Transactional
     public RegistrationEntity registerWorkshop(
@@ -28,22 +31,21 @@ public class RegistrationService {
         WorkshopEntity workshop =
                 workshopRepository
                         .findByWorkshopId(workshopId)
-                        .orElseThrow(() -> new IllegalArgumentException("Workshop not found"));
+                        .filter(candidate -> candidate.getDeletedAt() == null)
+                        .orElseThrow(() -> new EntityNotFoundException("Workshop not found"));
 
         if (!workshop.isRegistrationOpen()) {
             throw new RegistrationNotOpenException(workshopId);
         }
 
-        boolean reserved = redisService.reserveSlot(workshopId, userId);
+        boolean reserved = workshopSlotRedisRepository.reserveSlot(workshopId, userId);
         if (!reserved) {
             throw new WorkshopFullException(workshopId);
         }
 
-        WorkshopEntity workshopRef = workshopRepository.getReferenceById(workshopId);
-
         RegistrationEntity registration = new RegistrationEntity();
         registration.setUserId(userId);
-        registration.setWorkshop(workshopRef);
+        registration.setWorkshop(workshop);
         registration.setFullName(fullName);
         registration.setEmail(email);
         registration.setPaymentStatus(RegistrationPaymentStatus.PENDING);

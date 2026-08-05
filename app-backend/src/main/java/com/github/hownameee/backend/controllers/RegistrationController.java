@@ -1,5 +1,7 @@
 package com.github.hownameee.backend.controllers;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +26,8 @@ public class RegistrationController {
     private final RegistrationMapper registrationMapper;
 
     @PostMapping
-    public ResponseEntity<RegistrationResponse> register(@RequestBody RegistrationRequest request) {
+    public ResponseEntity<RegistrationResponse> register(
+            @Valid @RequestBody RegistrationRequest request) {
         RegistrationEntity entity =
                 registrationService.registerWorkshop(
                         request.workshopId(),

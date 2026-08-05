@@ -13,6 +13,7 @@ import com.github.hownameee.backend.dtos.workshop.WorkshopResponse;
 import com.github.hownameee.backend.entities.WorkshopEntity;
 import com.github.hownameee.backend.mappers.WorkshopMapper;
 import com.github.hownameee.backend.repositories.WorkshopRepository;
+import com.github.hownameee.backend.repositories.WorkshopSlotRedisRepository;
 import com.github.hownameee.backend.utils.TimeUtils;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ import lombok.AllArgsConstructor;
 public class WorkshopService {
 
     private final WorkshopRepository workshopRepository;
-    private final RedisService redisService;
+    private final WorkshopSlotRedisRepository workshopSlotRedisRepository;
     private final WorkshopMapper workshopMapper;
 
     @Transactional(readOnly = true)
@@ -49,7 +50,8 @@ public class WorkshopService {
 
         WorkshopEntity saved = workshopRepository.save(entity);
 
-        redisService.initializeSlots(saved.getWorkshopId(), saved.getTotalCapacity());
+        workshopSlotRedisRepository.initializeSlots(
+                saved.getWorkshopId(), saved.getTotalCapacity());
 
         return workshopMapper.toResponse(saved);
     }
@@ -68,7 +70,7 @@ public class WorkshopService {
         WorkshopEntity updated = workshopRepository.save(entity);
 
         int remainingSlots = updated.getTotalCapacity() - updated.getRegisteredSeats();
-        redisService.initializeSlots(updated.getWorkshopId(), remainingSlots);
+        workshopSlotRedisRepository.initializeSlots(updated.getWorkshopId(), remainingSlots);
 
         return workshopMapper.toResponse(updated);
     }
