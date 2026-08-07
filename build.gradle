@@ -1,0 +1,7 @@
+// Root build file aggregating subproject Docker build tasks
+
+tasks.register('dockerBuildAll') {
+    group = 'docker'
+    description = 'Builds all application Docker images (backend, bff, frontend) after compiling code in subprojects'
+    dependsOn ':app-backend:dockerBuild', ':gateway-bff:dockerBuild', ':app-frontend:dockerBuild'
+}

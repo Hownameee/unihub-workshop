@@ -4,9 +4,12 @@ services:
       context: ./app-backend
       dockerfile: Dockerfile
     image: app-backend:0.0.1-SNAPSHOT
-    container_name: app-backend
-    env_file:
-      - ./app-backend/.env
+    deploy:
+      replicas: 3
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://app-db:5432/postgres
+      - SPRING_DATA_REDIS_HOST=app-redis
+      - SPRING_DATA_REDIS_PORT=6379
     depends_on:
       - app-db
       - app-redis
@@ -91,9 +94,14 @@ services:
       context: ./gateway-bff
       dockerfile: Dockerfile
     image: gateway-bff:0.0.1-SNAPSHOT
-    container_name: gateway-bff
-    env_file:
-      - ./gateway-bff/.env
+    deploy:
+      replicas: 2
+    environment:
+      - BACKEND_SERVICE_URL=http://app-backend:4000
+      - SPRING_DATA_REDIS_HOST=bff-redis
+      - SPRING_DATA_REDIS_PORT=6379
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://service-auth:8080/auth/realms/unihub
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI=http://service-auth:8080/auth/realms/unihub/protocol/openid-connect/certs
     depends_on:
       - service-auth
       - app-backend

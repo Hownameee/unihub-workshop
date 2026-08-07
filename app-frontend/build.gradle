@@ -1,0 +1,28 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+plugins {
+    id 'base'
+}
+
+group = 'com.github.hownameee'
+version = '0.0.1-SNAPSHOT'
+description = 'UniHub Workshop Frontend'
+
+tasks.register('buildFrontend', Exec) {
+    group = 'build'
+    description = 'Builds the React frontend static distribution using npm'
+    workingDir = projectDir
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine 'cmd', '/c', 'npm', 'run', 'build'
+    } else {
+        commandLine 'npm', 'run', 'build'
+    }
+}
+
+tasks.register('dockerBuild', Exec) {
+    group = 'docker'
+    description = 'Builds the app-frontend Docker image after running frontend build'
+    dependsOn tasks.named('buildFrontend')
+    workingDir = projectDir
+    commandLine 'docker', 'build', '-t', "app-frontend:${version}", '.'
+}

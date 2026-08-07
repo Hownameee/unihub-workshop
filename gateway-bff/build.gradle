@@ -63,3 +63,11 @@ checkstyle {
             'checkstyle.suppressions.file': rootProject.file('configs/check-style/suppressions.xml').absolutePath
     ]
 }
+
+tasks.register('dockerBuild', Exec) {
+    group = 'docker'
+    description = 'Builds the gateway-bff Docker image after building the Spring Boot JAR'
+    dependsOn tasks.named('bootJar')
+    workingDir = projectDir
+    commandLine 'docker', 'build', '-t', "gateway-bff:${version}", '.'
+}
