@@ -1,1 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	/* 1. Colors */
+	--color-primary: #31675f;
+	--color-secondary: #1697bd;
+	--color-tertiary: #96c6bd;
+	--color-accent: #9fc3e3;
+	--color-surface: #e3e8e9;
+
+	--color-text-base: #31675f;
+	--color-text-muted: #1697bd;
+	--color-background: #ffffff;
+
+	/* 2. Fonts */
+	--font-family-sans: "Inter", sans-serif;
+	--font-family-mono: SFMono-Regular, Menlo, Monaco, Consolas;
+	--font-size-base: 1rem;
+	--font-size-lg: 1.25rem;
+	--font-size-sm: 0.875rem;
+	--font-weight-light: 300;
+	--font-weight-normal: 400;
+	--font-weight-bold: 700;
+
+	/* 3. Spacing */
+	--spacing-xs: 0.25rem; /* 4px */
+	--spacing-sm: 0.5rem; /* 8px */
+	--spacing-md: 1rem; /* 16px */
+	--spacing-lg: 1.5rem; /* 24px */
+	--spacing-xl: 3rem; /* 48px */
+
+	/* 4. Layout */
+	--border-radius: 0.25rem;
+	--box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+html {
+	font-size: 16px;
+}
+
+body {
+	font-family: var(--font-family-sans);
+	font-weight: var(--font-weight-normal);
+	background-color: var(--color-background);
+	color: var(--color-text-base);
+}
