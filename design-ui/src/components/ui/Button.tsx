@@ -16,7 +16,7 @@ const variants: Record<Variant, string> = {
   primary: "bg-primary text-primary-foreground hover:bg-[#295750] shadow-[0_2px_10px_rgba(49,103,95,0.25)]",
   secondary: "border border-secondary text-secondary bg-transparent hover:bg-secondary/10",
   ghost: "text-primary hover:bg-primary/5",
-  danger: "bg-[--color-danger] text-white hover:brightness-95 shadow-[0_2px_10px_rgba(208,69,76,0.25)]",
+  danger: "bg-danger text-white hover:bg-danger/90 shadow-[0_2px_10px_rgba(208,69,76,0.25)]",
   gradient: "text-white bg-gradient-to-r from-primary to-secondary hover:brightness-105 shadow-[0_6px_20px_rgba(22,151,189,0.3)]",
 }
 
