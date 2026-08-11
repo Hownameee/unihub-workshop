@@ -1,9 +1,9 @@
 import { Outlet } from "react-router";
 
-export default function Layout() {
+export default function Main() {
 	return (
-		<div>
+		<main>
 			<Outlet />
-		</div>
+		</main>
 	);
 }
